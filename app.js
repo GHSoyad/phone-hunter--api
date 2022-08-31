@@ -1,17 +1,31 @@
 document.getElementById('search-btn').addEventListener('click', function () {
-    const searchInput = document.getElementById('search-input').value;
-    displayLoader(true);
-    loadPhones(searchInput);
+    loadProcess(12);
 });
 
-const loadPhones = async (searchText) => {
+document.getElementById('search-input').addEventListener('keydown', function (event) {
+    if (event.key === "Enter") {
+        loadProcess(12);
+    }
+})
+
+document.getElementById('show-all-btn').addEventListener('click', function () {
+    loadProcess();
+})
+
+const loadProcess = limit => {
+    displayLoader(true);
+    const searchInput = document.getElementById('search-input').value;
+    loadPhones(searchInput, limit);
+}
+
+const loadPhones = async (searchText, dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     const res = await fetch(url);
     const data = await res.json();
-    displayPhones(data.data);
+    displayPhones(data.data, dataLimit);
 }
 
-const displayPhones = (phones) => {
+const displayPhones = (phones, dataLimit) => {
     const phonesContainer = document.getElementById('phones-container');
     phonesContainer.innerHTML = '';
 
@@ -20,6 +34,14 @@ const displayPhones = (phones) => {
         resultMessage.classList.remove('d-none');
     } else {
         resultMessage.classList.add('d-none');
+    }
+
+    const showAllBtn = document.getElementById('show-all');
+    if (phones.length > 12 && dataLimit) {
+        phones = phones.slice(0, 12);
+        showAllBtn.classList.remove('d-none');
+    } else {
+        showAllBtn.classList.add('d-none');
     }
 
     phones.forEach(phone => {
@@ -53,13 +75,13 @@ const showPhoneDetails = (phone) => {
 
     phoneName.innerText = phone.name;
     phoneDetails.innerHTML = `
-    <p>Brand: ${phone.brand}</p>
-    <p>Release Date: ${phone.releaseDate ? phone.releaseDate : 'No realease date found'}</p>
-    <p>Storage & Memory: ${phone.mainFeatures.memory ? phone.mainFeatures.memory : 'No information found'}</p>
-    <p>Display: ${phone.mainFeatures.displaySize ? phone.mainFeatures.displaySize : 'No information found'}</p>
-    <p>Chipset: ${phone.mainFeatures.chipSet ? phone.mainFeatures.chipSet : 'No information found'}</p>
-    <p>Sensors: ${sensorDetails(phone.mainFeatures.sensors)}</p>
-    <p>Others:<br>${othersDetail(phone.others)}</p>
+    <p><span class="fw-bold">Brand :</span> ${phone.brand}</p>
+    <p><span class="fw-bold">Release Date :</span> ${phone.releaseDate ? phone.releaseDate : 'No realease date found'}</p>
+    <p><span class="fw-bold">Storage & Memory :</span> ${phone.mainFeatures.memory ? phone.mainFeatures.memory : 'No information found'}</p>
+    <p><span class="fw-bold">Display :</span> ${phone.mainFeatures.displaySize ? phone.mainFeatures.displaySize : 'No information found'}</p>
+    <p><span class="fw-bold">Chipset :</span> ${phone.mainFeatures.chipSet ? phone.mainFeatures.chipSet : 'No information found'}</p>
+    <p><span class="fw-bold">Sensors :</span> ${sensorDetails(phone.mainFeatures.sensors)}</p>
+    <p><span class="fw-bold">Others :</span><br>${othersDetail(phone.others)}</p>
     `;
 
     function sensorDetails(sensorDetail) {

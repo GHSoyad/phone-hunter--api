@@ -14,6 +14,11 @@
 
     <header class="container text-center pt-4 pb-3 mt-1">
         <h1>Search products</h1>
+        <p class="fw-bold py-2">Search <span class="text-primary">Smartphones</span> , <span
+                class="text-primary">Smartwatches</span> or
+            <span class="text-primary">Tablets</span> with <span class="text-success">Brand name</span> or
+            <span class="text-success">Model</span>!!
+        </p>
         <div class="input-group w-50 mt-4 mx-auto">
             <input id="search-input" type="text" class="form-control" placeholder="Search product..."
                 aria-label="Search product" aria-describedby="button-addon2">
@@ -21,10 +26,10 @@
         </div>
     </header>
 
-    <main class="container">
+    <main class="container pb-5">
         <section>
             <!-- Product container -->
-            <div id="phones-container" class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+            <div id="phones-container" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 mt-1">
 
             </div>
 
@@ -45,7 +50,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 id="phone-name" class="modal-title"></h5>
+                            <h5 id="phone-name" class="modal-title text-primary"></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div id="phone-details" class="modal-body">
@@ -57,6 +62,12 @@
                     </div>
                 </div>
             </div>
+
+            <!--  -->
+            <div id="show-all" class="d-none text-center my-5">
+                <button id="show-all-btn" type="button" class="btn btn-primary">Show All</button>
+            </div>
+
         </section>
     </main>
 
