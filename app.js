@@ -82,6 +82,7 @@ const openPhoneDetailsModal = async (phoneId) => {
 
 // Function to show phone details
 const showPhoneDetails = (phone) => {
+    console.log(phone);
     const phoneName = document.getElementById('phone-name');
     const phoneDetails = document.getElementById('phone-details');
 
@@ -101,10 +102,7 @@ const showPhoneDetails = (phone) => {
         if (sensorDetail.length === 0) {
             return 'No sensor found';
         }
-        let sensors = '';
-        for (let sensor of sensorDetail) {
-            sensors += `${sensor}, `
-        }
+        const sensors = sensorDetail.join(', ');
         return sensors;
     }
 
@@ -115,7 +113,7 @@ const showPhoneDetails = (phone) => {
         }
         let keys = '';
         for (let key in otherDetail) {
-            keys += `${key}: ${otherDetail[key]},<br>`;
+            keys += `${key}: ${otherDetail[key]}<br>`;
         }
         return keys;
     }
